@@ -44,6 +44,11 @@ function bn_title_callback_function( $args ) {
 	echo $html;
 }
 
+
+//////////////// ADDING THE CUSTOM
+//////////////// META BOX
+
+/* Add the Meta Box */
 add_action('admin_menu', 'my_post_options_box');
 function my_post_options_box() {
   add_meta_box(
@@ -51,14 +56,31 @@ function my_post_options_box() {
     'Breaking News',            // Metabox title
     'bn_post_callback',         // The callback function
     'post',                     // Screens on which the box appears (can be post type, 'link', or 'comment') Accepts single or Array
-    'side',                     // Context--where the box appears ('normal, side, advanced')
+    'normal',                   // Context--where the box appears ('normal, side, advanced')
     'high'                      // Priority -- High or low
     // array()                  Callback args
   );
 }
 
+/* Build the Meta Box */
 function bn_post_callback() {
+  global $post;
 ?>
-  Hello!
+  <fieldset id="bn_settings">
+    <p><label for="meta_test">Test meta field</label>
+      <input type="text" name="meta_test" id="meta_test" value="<?php echo esc_attr( get_post_meta( $post->ID, 'meta_test', true ) ); ?>"></p>
+  </fieldset>
 <?php
+}
+
+/* Action for saving */
+add_action('save_post', 'custom_add_save');
+function custom_add_save($postID){
+  // called after a post or page is saved
+  if($parent_id = wp_is_post_revision($postID)) {
+    $postID = $parent_id;
+  }
+  if ($_POST['meta_test']) {
+    update_post_meta( $postID, 'meta_test', $_POST['meta_test'] );
+  }
 }
