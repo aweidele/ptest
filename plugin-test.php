@@ -35,7 +35,7 @@ function register_bn_options() {
 
 //// THIS FUNCTION REFERENCES THE THIRD SETTING IN add_settings_section
 function pt_settings_callback_function() {
-	//echo 'FUCK YOU';
+
 }
 
 //// THIS FUNCTION REFERENCES THE THIRD SETTING IN add_settings_field
