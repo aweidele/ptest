@@ -20,7 +20,7 @@ function register_bn_options() {
         'pt_settings_callback_function', 	// Callback used to render the description of the section
         $options_page			  			// Page on which to add this section of options <--- NOTE we're going to change this
 	);
-	add_settings_field( 
+	add_settings_field(
 		'bn_title',							// ID used to identify the field throughout the theme
 		'Breaking News Title',				// Label for the feild
 		'bn_title_callback_function',		// The name of the function responsible for rendering the option interface
@@ -40,6 +40,25 @@ function pt_settings_callback_function() {
 
 //// THIS FUNCTION REFERENCES THE THIRD SETTING IN add_settings_field
 function bn_title_callback_function( $args ) {
-	$html = '<input type="text" id="bn_title" name="bn_title" value="' . get_option('bn_title') . '" class="regular-text code">';	
+	$html = '<input type="text" id="bn_title" name="bn_title" value="' . get_option('bn_title') . '" class="regular-text code">';
 	echo $html;
+}
+
+add_action('admin_menu', 'my_post_options_box');
+function my_post_options_box() {
+  add_meta_box(
+    'bn_options',               // ID for the metabox
+    'Breaking News',            // Metabox title
+    'bn_post_callback',         // The callback function
+    'post',                     // Screens on which the box appears (can be post type, 'link', or 'comment') Accepts single or Array
+    'side',                     // Context--where the box appears ('normal, side, advanced')
+    'high'                      // Priority -- High or low
+    // array()                  Callback args
+  );
+}
+
+function bn_post_callback() {
+?>
+  Hello!
+<?php
 }
