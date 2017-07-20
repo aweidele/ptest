@@ -38,7 +38,7 @@ function pt_settings_callback_function() {
 
 }
 
-//// THIS FUNCTION REFERENCES THE THIRD SETTING IN add_settings_field
+//// THIS FUNCTION IS DEFINED BY THE THIRD SETTING IN add_settings_field
 function bn_title_callback_function( $args ) {
 	$html = '<input type="text" id="bn_title" name="bn_title" value="' . get_option('bn_title') . '" class="regular-text code">';	
 	echo $html;
